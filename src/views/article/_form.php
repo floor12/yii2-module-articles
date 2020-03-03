@@ -5,19 +5,19 @@
  * Date: 24.10.2016
  * Time: 20:22
  *
- * @var News $model
+ * @var Articles $model
  *
  */
 
+use floor12\articles\Articles;
 use floor12\files\components\FileInputWidget;
-use floor12\news\News;
 use floor12\summernote\Summernote;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $form = ActiveForm::begin([
-    'id' => 'news-form',
+    'id' => 'articles-form',
     'options' => ['class' => 'modaledit-form'],
     'enableClientValidation' => true
 ]);
@@ -36,41 +36,46 @@ if (is_numeric($model->publish_date))
 <div class="modal-body">
     <?= $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'title_seo')->textInput(['maxlength' => true]) ?>
 
     <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'keywords_seo')->textarea(['rows' => 2]) ?>
+        <div class="col-xs-6">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'description_seo')->textarea(['rows' => 2]) ?>
+        <div class="col-xs-6">
+            <?= $form->field($model, 'title_seo')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
+
     <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'key')->textInput() ?>
 
-            <?= $form->field($model, 'publish_date', ['enableClientValidation' => false])->widget(DatePicker::className(), [
-                'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'pickerButton' => false,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd.mm.yyyy'
-                ]
-            ]); ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'description_seo')->textarea(['style' => 'height: 108px;']) ?>
         </div>
 
 
         <div class="col-md-6">
-            <?= $form->field($model, 'status')->checkbox() ?>
-            <?= $form->field($model, 'index_page')->checkbox() ?>
-            <?= $form->field($model, 'poster_in_listing')->checkbox() ?>
-            <?= $form->field($model, 'poster_in_view')->checkbox() ?>
-            <?= $form->field($model, 'slider')->checkbox() ?>
+            <?= $form->field($model, 'slug')->textInput() ?>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <?= $form->field($model, 'publish_date', ['enableClientValidation' => false])->widget(DatePicker::className(), [
+                        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                        'pickerButton' => false,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'dd.mm.yyyy'
+                        ]
+                    ]); ?>
+                </div>
+                <div class="col-xs-6">
+                    <?= $form->field($model, 'status')->checkbox() ?>
+                    <?= $form->field($model, 'index_page')->checkbox() ?>
+                </div>
+            </div>
+
         </div>
+
 
     </div>
 

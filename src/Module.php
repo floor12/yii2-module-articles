@@ -16,10 +16,10 @@ class Module extends \yii\base\Module
 
     public $userModel = 'app\models\User';
 
-    public $viewIndex = '@vendor/floor12/yii2-module-articles/src/views/articles/index';
-    public $viewIndexListItem = '@vendor/floor12/yii2-module-articles/src/views/articles/_index';
-    public $viewView = '@vendor/floor12/yii2-module-articles/src/views/articles/view';
-    public $viewForm = '@vendor/floor12/yii2-module-articles/src/views/articles/_form';
+    public $viewIndex = '@vendor/floor12/yii2-module-articles/src/views/article/index';
+    public $viewIndexListItem = '@vendor/floor12/yii2-module-articles/src/views/article/_index';
+    public $viewView = '@vendor/floor12/yii2-module-articles/src/views/article/view';
+    public $viewForm = '@vendor/floor12/yii2-module-articles/src/views/article/_form';
 
 
     public function init()

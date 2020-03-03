@@ -1,6 +1,6 @@
 {
   "name": "floor12/yii2-module-articles",
-  "description": "Articles and news with postgres full text search.",
+  "description": "Articles and articles with postgres full text search.",
   "type": "yii2-extension",
   "minimum-stability": "stable",
   "keywords": [
@@ -8,7 +8,7 @@
     "yii2 module",
     "yii",
     "yii2",
-    "news",
+    "articles",
     "articles",
     "postresql",
     "postres"

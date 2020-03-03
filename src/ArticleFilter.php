@@ -6,9 +6,8 @@
  * Time: 18:48
  */
 
-namespace floor12\news;
+namespace floor12\articles;
 
-use floor12\article\Article;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -17,15 +16,17 @@ use yii\web\BadRequestHttpException;
 class ArticleFilter extends Model
 {
 
-    public $showDisabled = false;
+    public $showDisabled = 0;
+    public $filter;
     public $page_id;
 
-    private $_query;
+    private $query;
 
     public function rules()
     {
         return [
-            ['showDisabled', 'safe']
+            ['filter', 'string'],
+            ['showDisabled', 'integer']
         ];
     }
 
@@ -39,19 +40,24 @@ class ArticleFilter extends Model
     public function dataProvider()
     {
         if (!$this->validate())
-            throw new BadRequestHttpException('Ошибка валидации модели.');
+            throw new BadRequestHttpException('Ошибка валидации модели.' . print_r($this->errors, 1));
+        $this->query = Article::find()->where(['page_id' => $this->page_id]);
 
-        $this->_query = Article::find()->orderBy('publish_date DESC')->where(['page_id' => $this->page_id]);
+        if ($this->filter)
+            $this->query->search($this->filter);
+        else
+            $this->query->orderBy('publish_date DESC');
 
-        if (!(Yii::$app->getModule('news')->adminMode() && $this->showDisabled))
-            $this->_query->active();
+
+        if (!(Yii::$app->getModule('articles')->adminMode() && $this->showDisabled))
+            $this->query->active();
 
         return new ActiveDataProvider([
             'pagination' => [
                 'route' => Yii::$app->request->getPathInfo(),
                 'pageSize' => 20,
             ],
-            'query' => $this->_query,
+            'query' => $this->query,
         ]);
     }
 

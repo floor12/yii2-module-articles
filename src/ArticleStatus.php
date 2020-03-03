@@ -3,6 +3,7 @@
 
 namespace floor12\articles;
 
+use yii2mod\enum\helpers\BaseEnum;
 
 class ArticleStatus extends BaseEnum
 {

@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m180403_114045_articles extends Migration
+class m200223_120000_articles extends Migration
 {
     /**
      * @inheritdoc
@@ -11,7 +11,7 @@ class m180403_114045_articles extends Migration
     {
 
         #Новости --------------------------------------------------------------------------------------------------
-        $this->createTable('{{%articles}}', [
+        $this->createTable('{{%article}}', [
             'id' => $this->primaryKey(),
             'status' => $this->smallInteger()->notNull()->defaultValue(0)->comment('Hide'),
             'created' => $this->integer()->notNull()->comment('Creation timestamp'),
@@ -31,16 +31,16 @@ class m180403_114045_articles extends Migration
             'lang' => $this->string(2)->notNull()->defaultValue('en')
         ]);
 
-        $this->createIndex("idx-articles-status", "{{%articles}}", "status");
-        $this->createIndex("idx-articles-publish_date", "{{%articles}}", "publish_date");
-        $this->createIndex("idx-articles-slug", "{{%articles}}", "slug");
-        $this->createIndex("idx-articles-index_page", "{{%articles}}", "index_page");
-        $this->createIndex("idx-articles-page_id", "{{%articles}}", "page_id");
-        $this->createIndex("idx-articles-lang", "{{%articles}}", "lang");
-        $this->createIndex("idx-articles-created", "{{%articles}}", "created");
-        $this->createIndex("idx-articles-updated", "{{%articles}}", "updated");
-        $this->createIndex("idx-articles-create_user_id", "{{%articles}}", "create_user_id");
-        $this->createIndex("idx-articles-update_user_id", "{{%articles}}", "update_user_id");
+        $this->createIndex("idx-article-status", "{{%article}}", "status");
+        $this->createIndex("idx-article-publish_date", "{{%article}}", "publish_date");
+        $this->createIndex("idx-article-slug", "{{%article}}", "slug");
+        $this->createIndex("idx-article-index_page", "{{%article}}", "index_page");
+        $this->createIndex("idx-article-page_id", "{{%article}}", "page_id");
+        $this->createIndex("idx-article-lang", "{{%article}}", "lang");
+        $this->createIndex("idx-article-created", "{{%article}}", "created");
+        $this->createIndex("idx-article-updated", "{{%article}}", "updated");
+        $this->createIndex("idx-article-create_user_id", "{{%article}}", "create_user_id");
+        $this->createIndex("idx-article-update_user_id", "{{%article}}", "update_user_id");
 
     }
 
@@ -49,7 +49,7 @@ class m180403_114045_articles extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable("{{%articles}}");
+        $this->dropTable("{{%article}}");
     }
 
 

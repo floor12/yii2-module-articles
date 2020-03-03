@@ -1,13 +1,12 @@
 <?php
 
-namespace floor12\article;
+namespace floor12\articles;
 
 use common\models\User;
 use floor12\files\components\FileBehaviour;
 use floor12\files\models\File;
 use floor12\pages\interfaces\PageObjectInterface;
 use floor12\pages\models\Page;
-use Yii;
 use yii\db\ActiveRecord;
 
 
@@ -34,6 +33,8 @@ use yii\db\ActiveRecord;
  * @property bool $poster_in_listing Показывать постер в списке
  * @property bool $poster_in_view Показывать постер при просмотре
  * @property bool $slider Показывать слайдер
+ * @property string $tsvector
+ * @property string $lang
  *
  * @property User $creator
  * @property User $updater
@@ -41,6 +42,10 @@ use yii\db\ActiveRecord;
  */
 class Article extends ActiveRecord implements PageObjectInterface
 {
+    /** @var string */
+    public $title_highlighted;
+    /** @var string */
+    public $body_highlighted;
 
     /**
      * @inheritdoc
@@ -57,13 +62,15 @@ class Article extends ActiveRecord implements PageObjectInterface
     {
         return [
             ['slug', 'trim'],
-            [['status', 'created', 'updated', 'create_user_id', 'update_user_id', 'publish_date', 'page_id', 'index_page', 'poster_in_listing', 'poster_in_view', 'slider'], 'integer'],
+            [['status', 'created', 'updated', 'create_user_id', 'update_user_id', 'publish_date', 'page_id', 'index_page'], 'integer'],
             [['created', 'updated', 'slug', 'title', 'title_seo', 'publish_date'], 'required'],
             [['announce', 'body'], 'string'],
-            [['slug', 'description_seo', 'keywords_seo'], 'string', 'max' => 400],
+            [['slug', 'description_seo'], 'string', 'max' => 400],
             [['title', 'title_seo'], 'string', 'max' => 255],
-            [['create_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('article')->userModel, 'targetAttribute' => ['create_user_id' => 'id']],
-            [['update_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('article')->userModel, 'targetAttribute' => ['update_user_id' => 'id']],
+            //[['create_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('article')->userModel,
+            // 'targetAttribute' => ['create_user_id' => 'id']],
+            //[['update_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('article')->userModel,
+            // 'targetAttribute' => ['update_user_id' => 'id']],
             ['images', 'file', 'maxFiles' => 10, 'extensions' => ['jpg', 'jpeg', 'png', 'gif', 'svg'], 'checkExtensionByMimeType' => false],
             ['slug', 'match', 'pattern' => '/^[-a-z0-9]*$/', 'message' => 'Ключ URL может состоять только из латинских букв в нижнем регистре, цифр и дефиса.'],
         ];
@@ -85,7 +92,6 @@ class Article extends ActiveRecord implements PageObjectInterface
             'title' => 'Заголовок новости',
             'title_seo' => 'Title страницы',
             'description_seo' => 'Meta Description',
-            'keywords_seo' => 'Meta keywords',
             'announce' => 'Анонс новости',
             'body' => 'Текст новости',
             'publish_date' => 'Дата публикации',

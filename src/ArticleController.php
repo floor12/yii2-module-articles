@@ -6,7 +6,7 @@
  * Time: 21:17
  */
 
-namespace floor12\news;
+namespace floor12\articles;
 
 use floor12\editmodal\DeleteAction;
 use floor12\editmodal\EditModalAction;
@@ -19,13 +19,18 @@ use yii\web\NotFoundHttpException;
 
 class ArticleController extends Controller
 {
+    /**
+     * @var Module
+     */
+    public $module;
 
     /**
      * @inheritdoc
      */
     public function init()
     {
-        $this->layout = Yii::$app->getModule('news')->layout;
+        $this->module = Yii::$app->getModule('articles');
+        $this->layout = $this->layout;
         parent::init();
     }
 
@@ -42,7 +47,7 @@ class ArticleController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [Yii::$app->getModule('pages')->editRole],
+                        'roles' => [$this->module->editRole],
                     ],
 
                 ],
@@ -62,16 +67,16 @@ class ArticleController extends Controller
         $model = new ArticleFilter();
         $model->page_id = $page->id;
         $model->load(Yii::$app->request->get());
-        return $this->render(Yii::$app->getModule('news')->viewIndex, ['model' => $model, 'page' => $page]);
+        return $this->render($this->module->viewIndex, ['model' => $model, 'page' => $page]);
     }
 
     public function actionView($key, $page_id = null)
     {
-        $model = News::find()->where(['key' => $key])->andFilterWhere(['page_id' => $page_id])->one();
+        $model = Article::find()->where(['slug' => $key])->andFilterWhere(['page_id' => $page_id])->one();
         if (!$model)
             throw new NotFoundHttpException('Новость не найдена.');
 
-        if (!Yii::$app->getModule('news')->adminMode() && $model->status == News::STATUS_DISABLED)
+        if (!$this->module->adminMode() && $model->status == ArticleStatus::DISABLE)
             throw new NotFoundHttpException('Новость не найдена.');
 
         Yii::$app
@@ -85,7 +90,7 @@ class ArticleController extends Controller
             ->register($this->getView());
 
 
-        return $this->render(Yii::$app->getModule('news')->viewView, ['model' => $model]);
+        return $this->render($this->module->viewView, ['model' => $model]);
     }
 
     public function actions()
@@ -93,14 +98,14 @@ class ArticleController extends Controller
         return [
             'form' => [
                 'class' => EditModalAction::class,
-                'model' => News::class,
-                'view' => Yii::$app->getModule('news')->viewForm,
+                'model' => Article::class,
+                'view' => $this->module->viewForm,
                 'logic' => ArticleUpdate::class,
             ],
             'delete' => [
                 'class' => DeleteAction::class,
-                'model' => News::class,
-                'message' => 'Новость удалена',
+                'model' => Articles::class,
+                'message' => 'Объект удален',
             ]
         ];
     }
