@@ -57,6 +57,7 @@ class ArticleFilter extends Model
                 'route' => Yii::$app->request->getPathInfo(),
                 'pageSize' => 20,
             ],
+            'sort' => ['defaultOrder' => ['publish_date' => SORT_ASC]],
             'query' => $this->query,
         ]);
     }

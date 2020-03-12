@@ -88,7 +88,11 @@ if (is_numeric($model->publish_date))
 </div>
 
 <div class="modal-footer">
-    <?= Html::a('Отмена', '', ['class' => 'btn btn-default modaledit-disable']) ?>
+    <?= Html::a('Отмена', '', ['class' => 'btn btn-default modaledit-disable pull-left']) ?>
+    <?php if (!$model->isNewRecord) {
+        echo Html::submitButton('Сохранить и перейти к следующей', ['class' => 'btn btn-primary', 'name' => 'showNextOnSuccess', 'value' =>
+            1]);
+    } ?>
     <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => 'btn btn-primary']) ?>
 </div>
 
