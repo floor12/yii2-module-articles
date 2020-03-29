@@ -104,7 +104,7 @@ class ArticleController extends Controller
             ],
             'delete' => [
                 'class' => DeleteAction::class,
-                'model' => Articles::class,
+                'model' => Article::class,
                 'message' => 'Объект удален',
             ]
         ];

@@ -55,9 +55,9 @@ class ArticleFilter extends Model
         return new ActiveDataProvider([
             'pagination' => [
                 'route' => Yii::$app->request->getPathInfo(),
-                'pageSize' => 20,
+                'pageSize' => 200,
             ],
-            'sort' => ['defaultOrder' => ['publish_date' => SORT_ASC]],
+            'sort' => ['defaultOrder' => 'publish_date DESC, id DESC'],
             'query' => $this->query,
         ]);
     }
