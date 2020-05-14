@@ -18,8 +18,8 @@ use yii\helpers\Html;
 
 <?php if (Yii::$app->getModule('pages')->adminMode()): ?>
     <div class="article-object-admin-block pull-right">
-        <?= EditModalHelper::editBtn(['/articles/article/form'], $model->id) ?>
-        <?= EditModalHelper::deleteBtn(['/articles/article/delete'], $model->id) ?>
+        <?= EditModalHelper::editBtn('/articles/article/form', $model->id) ?>
+        <?= EditModalHelper::deleteBtn('/articles/article/delete', $model->id) ?>
     </div>
 <?php endif; ?>
 

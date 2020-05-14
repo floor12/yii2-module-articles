@@ -27,8 +27,8 @@ if (Yii::$app->getModule('articles')->adminMode())
 <div class="article-view">
     <?php if (Yii::$app->getModule('pages')->adminMode()): ?>
         <div class="pull-right">
-            <?= EditModalHelper::editBtn(['/articles/article/form'], $model->id) ?>
-            <?= EditModalHelper::deleteBtn(['/articles/article/delete'], $model->id) ?>
+            <?= EditModalHelper::editBtn('/articles/article/form', $model->id) ?>
+            <?= EditModalHelper::deleteBtn('/articles/article/delete', $model->id) ?>
         </div>
     <?php endif; ?>
 
