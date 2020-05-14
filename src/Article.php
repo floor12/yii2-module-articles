@@ -149,6 +149,6 @@ class Article extends ActiveRecord implements PageObjectInterface
     public function getUrl(): string
     {
         $page_path = Page::find()->where(['id' => $this->page_id])->select('path')->scalar();
-        return "/{$page_path}/{$this->slug}.html";
+        return $page_path . '/' . $this->slug . '.html';
     }
 }
