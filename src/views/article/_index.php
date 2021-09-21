@@ -12,6 +12,7 @@
 use floor12\articles\Article;
 use floor12\articles\ArticleStatus;
 use floor12\editmodal\EditModalHelper;
+use floor12\files\components\PictureWidget;
 use yii\helpers\Html;
 
 ?>
@@ -29,14 +30,12 @@ use yii\helpers\Html;
     <a href="<?= $model->url ?>" data-pjax="0" class="image">
         <?php if ($model->images): ?>
             <div class="image-wrapper">
-                <picture>
-                    <source type="image/webp"
-                            srcset="<?= $model->images[0]->getPreviewWebPath('300', 0, true) ?> 1x,
-                        <?= $model->images[0]->getPreviewWebPath('600', 0, true) ?> 2x">
-                    <img alt="<?= $model->title ?>"
-                         src="<?= $model->images[0]->getPreviewWebPath('300') ?>"
-                         srcset="<?= $model->images[0]->getPreviewWebPath('300') ?> 1x, <?= $model->images[0]->getPreviewWebPath('600') ?> 2x">
-                </picture>
+                <?= PictureWidget::widget([
+                    'model' => $model->images[0],
+                    'alt' => $model->title,
+                    'classImg' => 'img-responsive author-image-full',
+                    'width' => 300,
+                ]); ?>
             </div>
         <?php else: ?>
             <div class="no-image"></div>
