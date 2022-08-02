@@ -12,6 +12,7 @@
 use floor12\articles\Articles;
 use floor12\files\components\FileInputWidget;
 use floor12\summernote\Summernote;
+use floor12\textcounter\TextCounterWidget;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -40,9 +41,19 @@ if (is_numeric($model->publish_date))
     <div class="row">
         <div class="col-xs-6">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= TextCounterWidget::widget([
+                'targetId' => 'article-title',
+                'min' => 30,
+                'max' => 70
+            ]) ?>
         </div>
         <div class="col-xs-6">
             <?= $form->field($model, 'title_seo')->textInput(['maxlength' => true]) ?>
+            <?= TextCounterWidget::widget([
+                'targetId' => 'article-title_seo',
+                'min' => 10,
+                'max' => 70
+            ]) ?>
         </div>
     </div>
 
@@ -51,6 +62,11 @@ if (is_numeric($model->publish_date))
 
         <div class="col-md-6">
             <?= $form->field($model, 'description_seo')->textarea(['style' => 'height: 108px;']) ?>
+            <?= TextCounterWidget::widget([
+                'targetId' => 'article-description_seo',
+                'min' => 50,
+                'max' => 160
+            ]) ?>
         </div>
 
 
