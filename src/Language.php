@@ -6,4 +6,5 @@ class Language
 {
     const ENGLISH = 'en';
     const RUSSIAN = 'ru';
+    const TURKISH = 'tr';
 }

@@ -70,9 +70,9 @@ class ArticleController extends Controller
         return $this->render($this->module->viewIndex, ['model' => $model, 'page' => $page]);
     }
 
-    public function actionView($key, $page_id = null)
+    public function actionView(Page $page, $key)
     {
-        $model = Article::find()->where(['slug' => $key])->andFilterWhere(['page_id' => $page_id])->one();
+        $model = Article::find()->where(['slug' => $key])->andFilterWhere(['page_id' => $page->id])->one();
         if (!$model)
             throw new NotFoundHttpException('Новость не найдена.');
 

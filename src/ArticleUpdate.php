@@ -29,6 +29,7 @@ class ArticleUpdate
     protected $psqlLanguages = [
         Language::ENGLISH => 'english',
         Language::RUSSIAN => 'russian',
+        Language::TURKISH => 'turkish',
     ];
 
     /**

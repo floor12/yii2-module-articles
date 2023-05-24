@@ -8,6 +8,7 @@ use floor12\files\models\File;
 use floor12\pages\interfaces\PageObjectInterface;
 use floor12\pages\models\Page;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 
 /**
@@ -149,6 +150,6 @@ class Article extends ActiveRecord implements PageObjectInterface
     public function getUrl(): string
     {
         $page_path = Page::find()->where(['id' => $this->page_id])->select('path')->scalar();
-        return '/' . $page_path . '/' . $this->slug . '.html';
+        return Url::toRoute('/' . $page_path . '/' . $this->slug . '.html');
     }
 }
