@@ -95,10 +95,12 @@ class ArticleUpdate
 
     protected function prepareTsVector()
     {
-        $clearedBody = str_replace(['"', "'"], '', strip_tags($this->model->body));
+        $clearedBody = str_replace(['"', "'"], ['``', '`'], strip_tags($this->model->body));
+        $clearedTitle = str_replace(['"', "'"], ['``', '`'], strip_tags($this->model->title));
+        $clearedAnnounce = str_replace(['"', "'"], ['``', '`'], strip_tags($this->model->announce));
         $sql = "SELECT (
-            setweight(to_tsvector('{$this->currentPsqlLanguage}', '{$this->model->title}'),'A') || 
-            setweight(to_tsvector('{$this->currentPsqlLanguage}', '{$this->model->announce}'), 'B') ||
+            setweight(to_tsvector('{$this->currentPsqlLanguage}', '{$clearedTitle}'),'A') || 
+            setweight(to_tsvector('{$this->currentPsqlLanguage}', '{$clearedAnnounce}'), 'B') ||
             setweight(to_tsvector('{$this->currentPsqlLanguage}', '{$clearedBody}'), 'B')
         )";
 
